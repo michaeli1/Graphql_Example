@@ -1,0 +1,130 @@
+Minimizes data to be transfered on network
+Each client can use graphql 
+Fast development speed and meets expectations
+Can be used with any programming language
+--------------
+Why graphql is better than rest?
+- stateless servers and structured access to resources
+- Rest is strict specification
+---------
+Graphql more flexibility and efficiency
+No more over/under fetching
+Rapid product iterations
+Insightful Analytics - Deep understanding of the data being used
+Performance monitoring
+Type system to define capabilities of an API
+Schema serves as contract between client and server. -collection of graphql types -query, mutation, subscription types
+
+--------
+Core concepts
+---------
+SDL
+- type Person {
+    name: String!-required
+    posts: [Post!]!
+}
+- type Post {
+    title: String!
+    author: Person!
+}
+
+------------
+Fetching data
+-------------
+{
+    allPersons(last: 2) {
+        name
+            posts {
+                title
+            }
+        age
+    }
+}
+
+Nested information
+
+Mutations for crud operations - same syntax as query
+Eg:
+mutation {
+    createPerson(name: "Bob", age: 36) {
+        id 
+        name
+        age
+    }
+}
+
+Realtime updates with subscriptions
+subscription { 
+    newPerson {
+        name
+        age
+    }
+}
+----------------
+Schema for all queries
+----------------
+type Query {
+  allPersons(last: Int): [Person!]!
+}
+
+type Mutation {
+  createPerson(name: String!, age: Int!): Person!
+}
+
+type Subscription {
+  newPerson: Person!
+}
+
+type Person {
+  name: String!
+  age: Int!
+  posts: [Post!]!
+}
+
+type Post {
+  title: String!
+  author: Person!
+}
+-------------
+Architecture
+---------------
+Graphql is only a specification
+Should build graphql server to use in project
+Usecases:
+- Graphql server with connected database
+(single web server takes query and resolves it, can be used for any available network protocol, can use any db)
+- Graphql server to integrate existing system
+(can connect to microservices/legacy system/third-party api; doesn't care about data sources; acts as integration layer)
+- Hybrid approach with connected database and integration of existing system
+(combine two approaches)
+
+
+Resolver function is to fetch data for its corresponding field
+imperative vs declarative data fetching
+|               |
+Rest    vs      Graphql
+
+-----------------
+Graphql on client
+-----------------
+
+send queries and mutations directly without constructing HTTP requests
+view layer integration
+Caching
+Validation and optimization of queries based on Schema
+2 major Graphql clients
+1) Apollo client
+2) Relay
+
+The declarative nature of GraphQL ties in particularly well with functional reactive programming techniques
+
+With GraphQL, the caching approach would be to simply put the results of GraphQL queries into the store and simply return them whenever the same query is sent
+
+Advanced SDL:
+- Scalar types represent concrete units of data. The GraphQL spec has five predefined scalars: as String, Int, Float, Boolean, and ID.
+- Object types have fields that express the properties of that type and are composable.
+
+Throttling
+- based on server time
+- based on query complexity
+
